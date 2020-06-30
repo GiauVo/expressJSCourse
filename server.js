@@ -11,11 +11,12 @@ app.set("views", "./views");
 
 var todoList = [
   "Đi chợ",
-      "Nấu cơm",
-      "Ăn cơm",
-      "Rửa chén",
-      "Thức dậy, lên CodersX học Code"
+  "Nấu cơm",
+  "Ăn cơm",
+  "Rửa chén",
+  "Thức dậy, lên CodersX học Code"
 ]
+
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
   res.render("index",{
@@ -24,14 +25,23 @@ app.get("/", (req, res) => {
 });
 
 app.get("/todos", (req, res) => {
+  res.render("todos/index", {
+    todoList: todoList
+  });
+});
+
+app.get("/todos/search", (req, res) => {
   var q = req.query.q;
   var matchedItems = todoList.filter(function(item){
     return item.toLowerCase().indexOf(q) !== -1;
   })
+  
   res.render("todos/index", {
+    value: 1,
     todoList: matchedItems
-  });
-});
+  });  
+})
+
 // listen for requests :)
 app.listen(process.env.PORT, () => {
   console.log("Server listening on port " + process.env.PORT);

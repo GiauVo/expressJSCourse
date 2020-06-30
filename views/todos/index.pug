@@ -1,3 +1,7 @@
+form(action='/todos/search', method='GET')
+  input(type='text', name='q', value='')
+  button Search
+  
 ul
   each item in todoList
     li= item
