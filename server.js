@@ -8,6 +8,14 @@ const app = express();
 
 app.set("view engine", "pug");
 app.set("views", "./views");
+
+var todoList = [
+  "Đi chợ",
+      "Nấu cơm",
+      "Ăn cơm",
+      "Rửa chén",
+      "Thức dậy, lên CodersX học Code"
+]
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
   res.render("index",{
@@ -16,14 +24,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/todos", (req, res) => {
+  var q = req.query.q;
+  var matchedItems = todoList.filter(function(item){
+    return item.toLowerCase().indexOf(q) !== -1;
+  })
   res.render("todos/index", {
-    todoList: [
-      "Đi chợ",
-      "Nấu cơm",
-      "Ăn cơm",
-      "Rửa chén",
-      "Thức dậy, lên CodersX học Code"
-    ]
+    todoList: matchedItems
   });
 });
 // listen for requests :)
