@@ -5,21 +5,20 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
+
 const bodyParser = require('body-parser');
+
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
 app.set("view engine", "pug");
 app.set("views", "./views");
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
-var todoList = [
-  "Đi chợ",
-  "Nấu cơm",
-  "Ăn cơm",
-  "Rửa chén",
-  "Thức dậy, lên CodersX học Code"
-]
 
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
@@ -30,14 +29,14 @@ app.get("/", (req, res) => {
 
 app.get("/todos", (req, res) => {
   res.render("todos/index", {
-    todoList: todoList
+    todoList: db.get("todos").value()
   });
 });
 
 app.get("/todos/search", (req, res) => {
   var q = req.query.q;
-  var matchedItems = todoList.filter(function(item){
-    return item.toLowerCase().indexOf(q) !== -1;
+  var matchedItems = db.get("todos").value().filter(function(item){
+    return item.text.toLowerCase().indexOf(q) !== -1;
   })
   
   res.render("todos/index", {
@@ -51,7 +50,8 @@ app.get('/todos/create', function(req, res){
 })
 
 app.post('/todos/create', function (req, res) {
-  todoList.push(req.body.todo);
+  var count = db.get('posts').size().value();
+  db.get('todos').push({ id: ++count, text: req.body.todo}).write();
   res.redirect('back');
 })
 
