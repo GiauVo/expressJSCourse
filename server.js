@@ -39,7 +39,7 @@ app.get("/todos/search", (req, res) => {
     return item.text.toLowerCase().indexOf(q) !== -1;
   })
   
-  res.render("todos/index", {
+  res.render("todos/search", {
     value: 1,
     todoList: matchedItems
   });  
@@ -50,8 +50,19 @@ app.get('/todos/create', function(req, res){
 })
 
 app.post('/todos/create', function (req, res) {
-  var count = db.get('posts').size().value();
+  var count = db.get('todos').size().value();
   db.get('todos').push({ id: ++count, text: req.body.todo}).write();
+  res.redirect('back');
+})
+
+app.get('/todos/:id/delete', function(req, res){
+  var id = parseInt(req.params.id);
+  var matchedItem = db.get('todos')
+                      .find({id: id })
+                      .value();
+  db.get('todos')
+    .remove({id: id, text: matchedItem.text })
+    .write()
   res.redirect('back');
 })
 

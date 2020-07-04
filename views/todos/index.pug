@@ -1,7 +1,13 @@
+h2 Todo List
+
+a(href="/todos/search") Search
+
 form(action='/todos/create', method='POST')
   input(type='text', name='todo')
   button Create
 
 ul
   each item in todoList
-    li= item.text
+    li
+      span #{item.text} 
+      a(href='/todos/' + item.id + '/delete', method='POST') Delete 
