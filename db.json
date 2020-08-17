@@ -1,16 +1,14 @@
 {
-  "todos": [
+  "books": [
     {
-      "id": 1,
-      "text": "blah"
+      "title": "book 1",
+      "des": "hello",
+      "id": "PM2GbD63q"
     },
     {
-      "id": 3,
-      "text": "I'm Giau"
-    },
-    {
-      "id": 3,
-      "text": "Have a nice day!"
+      "title": "book 2",
+      "des": "hi",
+      "id": "V1s8tZboI"
     }
   ]
 }

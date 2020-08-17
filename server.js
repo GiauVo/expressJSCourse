@@ -1,72 +1,73 @@
-// server.js
-// where your node app starts
+var app = require('express')();
+var bodyParser = require('body-parser');
+var low = require('lowdb');
+var FileSync = require('lowdb/adapters/FileSync');
+var shortid = require('shortid');
 
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
-const express = require("express");
-const app = express();
+var adapter = new FileSync('db.json');
+var db = low(adapter);
+var temp = '';
+// Set some defaults (required if your JSON file is empty)
+db.defaults({ books: [] })
+  .write();
 
-const bodyParser = require('body-parser');
+var port = 3000;
 
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
+app.set('view engine', 'pug');
+app.set('views','./views');
 
-const adapter = new FileSync('db.json')
-const db = low(adapter)
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.set("view engine", "pug");
-app.set("views", "./views");
-
-app.use(bodyParser.json()) // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
-// https://expressjs.com/en/starter/basic-routing.html
-app.get("/", (req, res) => {
-  res.render("index",{
-    name: "Giau"
-  });  
+app.get('/', (req, res) => {
+	res.render('index');
 });
 
-app.get("/todos", (req, res) => {
-  res.render("todos/index", {
-    todoList: db.get("todos").value()
-  });
+app.get('/books', (req, res) => {
+	res.render('books/index', {
+		books: db.get('books').value()
+	});
 });
 
-app.get("/todos/search", (req, res) => {
-  var q = req.query.q;
-  var matchedItems = db.get("todos").value().filter(function(item){
-    return item.text.toLowerCase().indexOf(q) !== -1;
-  })
-  
-  res.render("todos/search", {
-    value: 1,
-    todoList: matchedItems
-  });  
+app.get('/books/create', function(req, res){
+	res.render('books/create');
 });
 
-app.get('/todos/create', function(req, res){
-  res.render('todos/create');
+app.post('/books/create', function(req, res){
+	req.body.id = shortid.generate();
+	db.get('books').push(req.body).write();
+	res.redirect('/books');
+});
+
+app.get('/books/:id/delete', function(req, res){
+	var id = req.params.id;
+	var matchedItem = db.get('books')
+						.find({id: id })
+						.value();
+	db.get('books')
+	  .remove({id: id, title: matchedItem.title, des: matchedItem.des })
+	  .write()
+
+	res.redirect('back');
+});
+
+app.get('/books/:id', function(req, res){
+	var id = req.params.id;
+	temp = id;
+	var book = db.get('books').find({id: id }).value
+	res.render('books/update', {
+		book: book
+	});	
+});
+
+app.post('/books/update', function(req, res){
+	db.get('books')
+	  .find({id: temp })
+	  .assign({title: req.body.title})
+	  .write()
+	res.redirect('/books');
+});
+
+app.listen(port, () => {
+	console.log('Hello my server is running on '+ port);
 })
-
-app.post('/todos/create', function (req, res) {
-  var count = db.get('todos').size().value();
-  db.get('todos').push({ id: ++count, text: req.body.todo}).write();
-  res.redirect('back');
-})
-
-app.get('/todos/:id/delete', function(req, res){
-  var id = parseInt(req.params.id);
-  var matchedItem = db.get('todos')
-                      .find({id: id })
-                      .value();
-  db.get('todos')
-    .remove({id: id, text: matchedItem.text })
-    .write()
-  res.redirect('back');
-})
-
-// listen for requests :)
-app.listen(process.env.PORT, () => {
-  console.log("Server listening on port " + process.env.PORT);
-});
