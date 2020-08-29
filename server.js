@@ -5,9 +5,13 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 var express = require("express");
 var app = express();
+var bodyParser = require('body-parser')
 
 app.set("view engine", "pug");
 app.set("views", "./views");
+
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 var todos= ["Đi chợ", "Nấu cơm", "Rửa bát", "Học code tại CodersX"];
 // https://expressjs.com/en/starter/basic-routing.html
@@ -32,6 +36,16 @@ app.get('/todos/search', (req, res) => {
   res.render('todos/index', {
     todos: matchedItems
   });
+});
+
+app.get('/todos/create', (req,res) => {
+  res.render('todos/create');
+});
+
+app.post('/todos/create', (req, res) => {
+  //var data = req.body;
+  todos.push(req.body.todo);
+  res.redirect('/todos');
 });
 
 // listen for requests :)
