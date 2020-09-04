@@ -5,47 +5,58 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 var express = require("express");
 var app = express();
-var bodyParser = require('body-parser')
+var bodyParser = require("body-parser");
+var low = require("lowdb");
+var FileSync = require("lowdb/adapters/FileSync");
+
+var adapter = new FileSync("db.json");
+var db = low(adapter);
 
 app.set("view engine", "pug");
 app.set("views", "./views");
 
-app.use(bodyParser.json()) // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-var todos= ["Đi chợ", "Nấu cơm", "Rửa bát", "Học code tại CodersX"];
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get('/todos', (req, res) => {
-  res.render('todos/index', {
-    todos: todos
+app.get("/todos", (req, res) => {
+  res.render("todos/index", {
+    todos: db.get("todos").value()
   });
 });
 
-app.get('/todos/search', (req, res) => {
+app.get("/todos/search", (req, res) => {
   var q = req.query.q;
-  console.log(q);
-  
-  var matchedItems = todos.filter(function(item){
-    return item.toLowerCase().indexOf(q) !== -1;
-  });
-  
-  res.render('todos/index', {
+
+  var matchedItems = db
+    .get("todos")
+    .value()
+    .filter(function(item) {
+      return item.text.toLowerCase().indexOf(q) !== -1;
+    });
+
+  res.render("todos/index", {
     todos: matchedItems
   });
 });
 
-app.get('/todos/create', (req,res) => {
-  res.render('todos/create');
+app.get("/todos/create", (req, res) => {
+  res.render("todos/create");
 });
 
-app.post('/todos/create', (req, res) => {
-  //var data = req.body;
-  todos.push(req.body.todo);
-  res.redirect('/todos');
+app.post("/todos/create", (req, res) => {
+  var id = db
+    .get("todos")
+    .size()
+    .value();
+  db.get("todos")
+    .push({ id: id++, text: req.body.todo })
+    .write();
+  res.redirect("/todos");
 });
 
 // listen for requests :)
