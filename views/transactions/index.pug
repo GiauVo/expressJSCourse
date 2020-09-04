@@ -1,0 +1,18 @@
+style
+  include ../style.css
+h1 Transactions
+a(href='/') Home
+br
+a(href='/transactions/create') New
+br
+br
+table(style='width:100%', border='1')
+    tr
+      th Transaction
+      th User's name
+      th Book
+    each transaction in transactions
+      tr      
+        td #{transaction.transId}
+        td #{transaction.name}
+        td #{transaction.title}

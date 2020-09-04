@@ -1,19 +1,21 @@
+style
+  include ../style.css
 h1 My Books
 a(href='/') Home
 br
 a(href='/books/create') New
 br
 br
-table(style='width:100%', border='1')
+table(style='width:100%')
     tr
       th Title
       th Description
-      th Transaction
+      th Custom
     each book in books
       tr
-        th #{book.title}
-        th #{book.des}
-        th 
+        td #{book.title}
+        td #{book.des}
+        td 
           span &nbsp
           a(href='/books/' + book.id + '/delete', method='POST') Delete
           span &nbsp

@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 
 var bookRoute = require("./routes/book.route");
 var userRoute = require("./routes/user.route");
+var transactionRoute = require("./routes/transactions.route");
 
 var port = 3000;
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 app.use("/books", bookRoute);
 app.use("/users", userRoute);
+app.use("/transactions", transactionRoute);
 
 app.listen(port, () => {
   console.log("Hello my server is running on " + port);

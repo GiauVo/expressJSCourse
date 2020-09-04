@@ -37,7 +37,7 @@ input {
 form button {
   background-color: #bbbbf2;
   border: 2px solid currentColor;
-  border-radius: .25em;
+  border-radius: 0.25em;
   cursor: pointer;
   font-size: inherit;
   line-height: 1.4em;
@@ -53,4 +53,14 @@ footer {
   margin-top: 3em;
   padding-top: 1.5em;
   border-top: 1px solid lightgrey;
+}
+
+table,th,td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th,td {
+  padding: 5px;
+  text-align: left;
 }
