@@ -7,5 +7,7 @@ router.get("/", controller.index);
 //create
 router.get("/create", controller.create);
 router.post("/create", controller.postCreate);
+//complete
+router.get("/:transId/complete", controller.complete);
 
 module.exports = router;

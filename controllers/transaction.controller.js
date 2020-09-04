@@ -30,7 +30,16 @@ module.exports.postCreate = function(req, res) {
   var book = db.get('books').find({title: req.body.title}).value();
   
   db.get("transactions")
-    .push({transId: req.body.id, userId: user.id, bookId: book.id})
+    .push({transId: req.body.id, userId: user.id, bookId: book.id, isComplete: false})
     .write();
   res.redirect("/transactions");
+}
+
+module.exports.complete = function(req, res) {
+  var transId = req.params.transId;
+  db.get("transactions")
+    .find({transId: transId})
+    .assign({isComplete: true})
+    .write();
+  res.redirect("back");
 }

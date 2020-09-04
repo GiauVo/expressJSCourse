@@ -11,8 +11,17 @@ table(style='width:100%', border='1')
       th Transaction's ID
       th User's name
       th Book
+      th isComplete
+      th Custom
     each transaction in transactions
       tr      
         td #{transaction.transId}
         td #{transaction.name}
         td #{transaction.title}
+        td #{transaction.isComplete}
+        td
+          if transaction.isComplete
+            button(diabled) Complete
+          else
+            form(action='/transactions/' + transaction.transId + '/complete', method='GET')
+              button(type='submit') Complete

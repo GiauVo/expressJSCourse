@@ -18,7 +18,7 @@ h1 {
 }
 
 form {
-  background-color: #eee;
+  background-color: none;
   display: grid;
   grid-gap: 1em;
   padding: 1em;
@@ -36,7 +36,7 @@ input {
 
 form button {
   background-color: #bbbbf2;
-  border: 2px solid currentColor;
+  border: 1.25px solid currentColor;
   border-radius: 0.25em;
   cursor: pointer;
   font-size: inherit;
