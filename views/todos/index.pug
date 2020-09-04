@@ -6,4 +6,7 @@ form(action='/todos/search', method='GET')
 
 ul
   each item in todos
-    li= item.text
+    li
+      span= item.text
+      span &nbsp
+      a(href="/todos/" + item.id + "/delete") Delete

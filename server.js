@@ -54,7 +54,19 @@ app.post("/todos/create", (req, res) => {
     .size()
     .value();
   db.get("todos")
-    .push({ id: id++, text: req.body.todo })
+    .push({ id: ++id, text: req.body.todo })
+    .write();
+  res.redirect("/todos");
+});
+
+app.get("/todos/:id/delete", (req, res) => {
+  var id = parseInt(req.params.id);
+  var todo = db
+    .get("todos")
+    .find({ id: id })
+    .value();
+  db.get("todos")
+    .remove({ id: id, text: todo.text })
     .write();
   res.redirect("/todos");
 });
