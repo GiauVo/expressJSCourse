@@ -1,12 +1,14 @@
 h1 My Books
+a(href='/') Home
+br
 a(href='/books/create') New
 br
 br
 table(style='width:100%', border='1')
     tr
       th Title
-      th Descripton
-      th Custom
+      th Description
+      th Transaction
     each book in books
       tr
         th #{book.title}
