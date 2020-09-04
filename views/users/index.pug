@@ -1,0 +1,18 @@
+h1 Users
+a(href='/users/create') New
+br
+br
+table(style='width:100%', border='1')
+    tr
+      th Name
+      th Information
+      th Transaction
+    each user in users
+      tr
+        th #{user.name}
+        th #{user.info}
+        th 
+          span &nbsp
+          a(href='/users/' + user.id + '/delete', method='POST') Delete
+          span &nbsp
+          a(href='/users/' + user.id, method='POST') Update

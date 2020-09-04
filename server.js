@@ -1,77 +1,116 @@
-// server.js
-// where your node app starts
-
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
-var express = require("express");
-var app = express();
+var app = require("express")();
 var bodyParser = require("body-parser");
 var low = require("lowdb");
 var FileSync = require("lowdb/adapters/FileSync");
+var shortid = require("shortid");
 
 var adapter = new FileSync("db.json");
 var db = low(adapter);
+var temp = "";
+// Set some defaults (required if your JSON file is empty)
+db.defaults({ books: [] , users: []}).write();
+
+var port = 3000;
 
 app.set("view engine", "pug");
 app.set("views", "./views");
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-// https://expressjs.com/en/starter/basic-routing.html
+//Home page ^^
 app.get("/", (req, res) => {
   res.render("index");
 });
+//list of books
+app.get("/books", (req, res) => {
+  res.render("books/index", {
+    books: db.get("books").value()
+  });
+});
+//crreate
+app.get("/books/create", function(req, res) {
+  res.render("books/create");
+});
 
-app.get("/todos", (req, res) => {
-  res.render("todos/index", {
-    todos: db.get("todos").value()
+app.post("/books/create", function(req, res) {
+  req.body.id = shortid.generate();
+  db.get("books")
+    .push(req.body)
+    .write();
+  res.redirect("/books");
+});
+//delete
+app.get("/books/:id/delete", function(req, res) {
+  var id = req.params.id;
+  db.get("books")
+    .remove({ id })
+    .write();
+
+  res.redirect("back");
+});
+//update
+app.get("/books/:id", function(req, res) {
+  var id = req.params.id;
+  temp = id;
+  var book = db.get("books").find({ id: id }).value;
+  res.render("books/update", {
+    book: book
   });
 });
 
-app.get("/todos/search", (req, res) => {
-  var q = req.query.q;
+app.post("/books/update", function(req, res) {
+  db.get("books")
+    .find({ id: temp })
+    .assign({ title: req.body.title })
+    .write();
+  res.redirect("/books");
+});
 
-  var matchedItems = db
-    .get("todos")
-    .value()
-    .filter(function(item) {
-      return item.text.toLowerCase().indexOf(q) !== -1;
-    });
+/*---- User's CRUD ---*/
+//index --> view user's list infor
+app.get("/users", (req, res) => {
+  res.render("users/index", {
+    users: db.get("users").value()
+  });
+});
+//create
+app.get("/users/create", function(req, res) {
+  res.render("users/create");
+});
 
-  res.render("todos/index", {
-    todos: matchedItems
+app.post("/users/create", function(req, res) {
+  req.body.id = shortid.generate();
+  db.get("users")
+    .push(req.body)
+    .write();
+  res.redirect("/users");
+});
+//delete
+app.get("/users/:id/delete", function(req, res) {
+  var id = req.params.id;
+  db.get("users")
+    .remove({ id })
+    .write();
+  res.redirect("back");
+});
+//update
+app.get("/users/:id", function(req, res) {
+  var id = req.params.id;
+  temp = id;
+  var user = db.get("users").find({ id: id }).value;
+  res.render("users/update", {
+    user: user
   });
 });
 
-app.get("/todos/create", (req, res) => {
-  res.render("todos/create");
-});
-
-app.post("/todos/create", (req, res) => {
-  var id = db
-    .get("todos")
-    .size()
-    .value();
-  db.get("todos")
-    .push({ id: ++id, text: req.body.todo })
+app.post("/users/update", function(req, res) {
+  db.get("users")
+    .find({ id: temp })
+    .assign({ name: req.body.name, info: req.body.info })
     .write();
-  res.redirect("/todos");
+  res.redirect("/users");
 });
 
-app.get("/todos/:id/delete", (req, res) => {
-  var id = parseInt(req.params.id);
-  var todo = db
-    .get("todos")
-    .find({ id: id })
-    .value();
-  db.get("todos")
-    .remove({ id: id, text: todo.text })
-    .write();
-  res.redirect("/todos");
-});
-
-// listen for requests :)
-app.listen(process.env.PORT, () => {
-  console.log("Server listening on port " + process.env.PORT);
+app.listen(port, () => {
+  console.log("Hello my server is running on " + port);
 });
