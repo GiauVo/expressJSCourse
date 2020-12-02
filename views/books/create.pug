@@ -1,9 +1,12 @@
-form(action='/books/create', method='POST')
-	label Title: 
-	input(name="title", type='text')
-	br
-	br
-	label Description: 
-	input(name="des", type='text')
-	br
-	button ADD
+extends ../index.pug
+
+block content
+  h1 Create new book
+  form(action='/books/create', method='POST')
+    .form-group
+      label(for='title') Book's Title
+      input#bookCreate.form-control(name="title", type='text')
+    .form-group
+      label(for='des') Description
+      input#bookCreate.form-control(name="des", type='text')
+    button.btn.btn-primary ADD
