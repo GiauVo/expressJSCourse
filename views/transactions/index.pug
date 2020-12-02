@@ -1,0 +1,27 @@
+style
+  include ../style.css
+h1 Transactions
+a(href='/') Home
+br
+a(href='/transactions/create') New
+br
+br
+table(style='width:100%', border='1')
+    tr
+      th Transaction's ID
+      th User's name
+      th Book
+      th isComplete
+      th Custom
+    each transaction in transactions
+      tr      
+        td #{transaction.transId}
+        td #{transaction.name}
+        td #{transaction.title}
+        td #{transaction.isComplete}
+        td
+          if transaction.isComplete
+            button(diabled) Complete
+          else
+            form(action='/transactions/' + transaction.transId + '/complete', method='GET')
+              button(type='submit') Complete

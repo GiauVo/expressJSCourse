@@ -1,0 +1,22 @@
+style
+  include ../style.css
+h1 Users
+a(href='/') Home
+br
+a(href='/users/create') New
+br
+br
+table(style='width:100%')
+    tr
+      th Name
+      th Information
+      th Custom
+    each user in users
+      tr
+        td #{user.name}
+        td #{user.info}
+        td 
+          span &nbsp
+          a(href='/users/' + user.id + '/delete', method='POST') Delete
+          span &nbsp
+          a(href='/users/' + user.id, method='POST') Update

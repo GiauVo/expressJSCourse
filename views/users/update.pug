@@ -1,0 +1,10 @@
+h1 Update User's information
+form(action='/users/update', method='POST')
+	label Name: 
+	input(name="name", type='text', value= user.name)
+	br
+	br
+	label Information: 
+	input(name="info", type='text', value= user.info)
+	br
+	button Update

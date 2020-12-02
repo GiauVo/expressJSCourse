@@ -1,0 +1,16 @@
+form(action='/transactions/create', method='POST')
+  label Choose a user:
+  span &nbsp
+  select(name='name')
+    each user in users
+      option #{user.name}
+  br
+  br
+  label Choose a book:
+  span &nbsp
+  select(name='title')
+    each book in books
+      option #{book.title}
+  br
+  br
+  button ADD
