@@ -1,0 +1,15 @@
+extends ../index.pug
+
+block header
+  .container
+    h1 Login
+    if (errors)
+      .alert.alert-danger= errors
+    form(method='POST')
+      .form-group
+        label(for='email') Email:
+        input#email.form-control(name="email", type='email', value=values ? values.email : "")
+      .form-group
+        label(for='password') Password:
+        input#password.form-control(name="password", type='password', value=values ? values.password : "")
+      button.btn.btn-primary Login

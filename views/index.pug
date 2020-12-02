@@ -1,9 +1,31 @@
-style
-  include ./style.css
-h1 Welcome
-p Please click the link below to access Books od User Management ^^
-a(href='/books') Books
-br
-a(href='/users') Users
-br
-a(href='/transactions') Transactions
+extends layouts/common.pug
+
+block append header
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+    a.navbar-brand(href='/') Home
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        block itemDropdown
+          li.nav-item.dropdown
+            a#navbarDropdownMenuLink1.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                | Book
+            .dropdown-menu(aria-labelledby='navbarDropdownMenuLink1')
+                a.dropdown-item(href='/books') List Books
+                a.dropdown-item(href='/books/create') Create new Book
+                a.dropdown-item(href='/books') Update/Delete
+          li.nav-item.dropdown
+            a#navbarDropdownMenuLink2.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              | User
+            .dropdown-menu(aria-labelledby='navbarDropdownMenuLink2')
+              a.dropdown-item(href='/users') List Users
+              a.dropdown-item(href='/users/create') Create new User
+              a.dropdown-item(href='/users') Update/Delete
+          li.nav-item.dropdown
+            a#navbarDropdownMenuLink3.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              | Transaction
+            .dropdown-menu(aria-labelledby='navbarDropdownMenuLink3')
+              a.dropdown-item(href='/transactions') List Transactions
+              a.dropdown-item(href='/transactions/create') Create new Transactions
+              a.dropdown-item(href='/transactions') Update/Delete

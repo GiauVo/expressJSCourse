@@ -1,7 +1,9 @@
-h1 Update Title
-form(action='/books/update', method='POST')
-	label Title: 
-	input(name="title", type='text', value= book.title)
-	br
-	br
-	button Update
+extends ../index.pug
+
+block content
+  h1 Update Title
+  form(action='/books/update', method='POST')
+    .form-group
+      label(for='title') Title: 
+      input#title.form-control(name="title", type='text', value= book.title)
+    button.btn.btn-primary Update

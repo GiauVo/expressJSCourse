@@ -1,16 +1,18 @@
-form(action='/transactions/create', method='POST')
-  label Choose a user:
-  span &nbsp
-  select(name='name')
-    each user in users
-      option #{user.name}
-  br
-  br
-  label Choose a book:
-  span &nbsp
-  select(name='title')
-    each book in books
-      option #{book.title}
-  br
-  br
-  button ADD
+extends ../index.pug
+
+block content
+  h1 Create new Transaction
+  form(action='/transactions/create', method='POST')
+    .form-group
+      label(for='chossenUser') Choose a user:
+      span &nbsp
+      select#inlineFormCustomSelect.custom-select.mr-sm-2(name='name')
+        each user in users
+          option #{user.name}
+    .form-group
+      label(for='chossenBook') Choose a book:
+      span &nbsp
+      select#inlineFormCustomSelect.custom-select.mr-sm-2(name='title')
+        each book in books
+          option #{book.title}
+    button.btn.btn-primary ADD

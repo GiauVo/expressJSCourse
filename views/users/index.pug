@@ -1,22 +1,51 @@
-style
-  include ../style.css
-h1 Users
-a(href='/') Home
-br
-a(href='/users/create') New
-br
-br
-table(style='width:100%')
-    tr
-      th Name
-      th Information
-      th Custom
-    each user in users
-      tr
-        td #{user.name}
-        td #{user.info}
-        td 
-          span &nbsp
-          a(href='/users/' + user.id + '/delete', method='POST') Delete
-          span &nbsp
-          a(href='/users/' + user.id, method='POST') Update
+extends ../index.pug
+
+block content
+  h1 Users
+  a.h4(href='/users/create') New
+  br
+  br
+  .table-responsive
+    table.table
+      thead.thead-light
+        tr
+          th(scope='col') Name
+          th(scope='col') Information
+          th(scope='col') Custom
+      tbody
+        each user in users
+          tr
+            td #{user.name}
+            td #{user.info}
+            td 
+              span &nbsp
+              if user.isAdmin
+                a.btn.btn-danger.disabled Delete
+                span &nbsp
+                a.btn.btn-success.disabled Update
+              else
+                a.btn.btn-danger(href='/users/' + user.id + '/delete', method='POST') Delete
+                span &nbsp
+                a.btn.btn-success(href='/users/' + user.id, method='POST') Update
+  nav.mt-3
+      ul.pagination.justify-content-center
+        li.page-item
+            a.page-link(href='/users?page=1') First
+        li.page-item(class= page === 1 ? 'disabled' : '')
+          a.page-link(href='/users?page=' + (page - 1)) &laquo
+        if (page === 1 || page === 2) 
+          - for (let i = 1; i <= 3; i++)
+            li.page-item(class= page === i ? 'active' : '')
+              a.page-link(href='/users?page=' + i)= i
+        else if (page == lengthPage -1 || page == lengthPage)
+          - for (let i = 2; i >= 0; i--)
+            li.page-item(class= page === (lengthPage - i) ? 'active' : '')
+              a.page-link(href='/users?page=' + (lengthPage - i))= lengthPage - i
+        else      
+          - for (let i = page - 1; i <= page + 1; i++)
+              li.page-item(class= page === i ? 'active' : '')
+                a.page-link(href='/users?page=' + i)= i
+        li.page-item(class= page === lengthPage ? 'disabled' : '')
+          a.page-link(href='/users?page=' + (page + 1)) &raquo
+        li.page-item
+            a.page-link(href='/users?page=' + lengthPage) Last

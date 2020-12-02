@@ -1,74 +1,89 @@
 {
   "books": [
     {
-      "title": "book 1",
-      "des": "hello",
-      "id": "PM2GbD63q"
-    },
-    {
       "title": "Doraemon",
       "des": "Japanese comic",
-      "id": "O9EBRmOs-"
+      "id": "--I9_NsJY"
+    },
+    {
+      "title": "Sherlock Holmes",
+      "des": "best novel",
+      "id": "8vo3kXz0-"
+    },
+    {
+      "title": "Conan",
+      "des": "Japanese comic",
+      "id": "PdWBiGOkW"
     }
   ],
   "users": [
     {
-      "name": "Võ Ngọc Giàu",
-      "info": "Student",
-      "id": "PEAtqHQ3K"
+      "id": "EBnyJmNJx",
+      "name": "admin",
+      "email": "admin@coderxtokyo.com",
+      "password": "$2b$10$Bjvg4HIcLyRwcbzooUXsDethjuGmM6Qt/uC0mtBHx8kw.rxtN3u.G",
+      "info": "root user",
+      "isAdmin": true
     },
     {
-      "name": "Nguyễn Nguyên",
-      "info": "Teacher",
-      "id": "ThdF7vtxD"
+      "id": "eYyya3L-B",
+      "name": "Võ Ngọc Giàu",
+      "email": "giauvo997@gmail.com",
+      "password": "$2b$10$Y.Jrp6YBrnpPiIsOVfAZw.6ur6cEru/Cn/p9FqKtBCkoaFf8syn3i",
+      "info": "Student",
+      "isAdmin": false
+    },
+    {
+      "id": "4IRQKQ2Cz",
+      "name": "Miley",
+      "email": "miley01@coderxtokyo.com",
+      "password": "$2b$10$qC.iDuz8toGTecSeBUbpzeQSe/avOnu4EPQeTffiOsLsHcurSSldW",
+      "info": "Student",
+      "isAdmin": false
+    },
+    {
+      "id": "OpUHAmGEQ",
+      "name": "Võ Ngọc Giàu",
+      "email": "giauvo@coderxtokyo.com",
+      "password": "$2b$10$mhebbRUat4wO2FJFofwLRO5t1Rx8KiirOhftInf2oRJUwNa17OAKK",
+      "info": "Student",
+      "isAdmin": false
     }
   ],
   "transactions": [
     {
-      "transId": "JfLxJ7bCm",
-      "userId": "PEAtqHQ3K",
-      "bookId": "PM2GbD63q",
+      "transId": "Jf3UQuSxy",
+      "userId": "eYyya3L-B",
+      "bookId": "--I9_NsJY",
       "isComplete": true,
+      "id": "--I9_NsJY",
       "name": "Võ Ngọc Giàu",
+      "email": "giauvo997@gmail.com",
+      "password": "$2b$10$Y.Jrp6YBrnpPiIsOVfAZw.6ur6cEru/Cn/p9FqKtBCkoaFf8syn3i",
       "info": "Student",
-      "id": "PM2GbD63q",
-      "title": "book 1",
-      "des": "hello",
-      "isCpmplete": true
-    },
-    {
-      "transId": "z70MYehiS",
-      "userId": "PEAtqHQ3K",
-      "bookId": "O9EBRmOs-",
-      "isComplete": true,
-      "name": "Võ Ngọc Giàu",
-      "info": "Student",
-      "id": "O9EBRmOs-",
+      "isAdmin": false,
       "title": "Doraemon",
       "des": "Japanese comic"
     },
     {
-      "transId": "YLZaN0f0c",
-      "userId": "ThdF7vtxD",
-      "bookId": "PM2GbD63q",
+      "transId": "NyfCLl82F",
+      "userId": "4IRQKQ2Cz",
+      "bookId": "8vo3kXz0-",
       "isComplete": false,
-      "name": "Nguyễn Nguyên",
-      "info": "Teacher",
-      "id": "PM2GbD63q",
-      "title": "book 1",
-      "des": "hello",
-      "isCpmplete": true
+      "id": "8vo3kXz0-",
+      "name": "Miley",
+      "email": "miley01@coderxtokyo.com",
+      "password": "$2b$10$qC.iDuz8toGTecSeBUbpzeQSe/avOnu4EPQeTffiOsLsHcurSSldW",
+      "info": "Student",
+      "isAdmin": false,
+      "title": "Sherlock Holmes",
+      "des": "best novel"
     },
     {
-      "transId": "buWACqj0P",
-      "userId": "ThdF7vtxD",
-      "bookId": "O9EBRmOs-",
-      "isComplete": false,
-      "name": "Nguyễn Nguyên",
-      "info": "Teacher",
-      "id": "O9EBRmOs-",
-      "title": "Doraemon",
-      "des": "Japanese comic"
+      "transId": "4N_ranxgZ",
+      "userId": "4IRQKQ2Cz",
+      "bookId": "--I9_NsJY",
+      "isComplete": false
     }
   ]
 }
